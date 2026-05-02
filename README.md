@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# AV2 - Sistema Aerocode
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sistema de gestao de producao de aeronaves feito em React + TypeScript.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Como rodar
 
-## React Compiler
+Precisa do Node.js instalado.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Abre em http://localhost:5173
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Roda no Windows e no Ubuntu.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Primeiro acesso
+
+Quando abrir pela primeira vez, vai aparecer a tela de configuracao inicial. Cria um usuario admin e depois faz login.
+
+Se precisar resetar, limpa o localStorage do navegador.
+
+---
+
+## Permissoes
+
+Tem 3 niveis:
+
+- Administrador - acesso total
+- Engenheiro - gerencia pecas, etapas e testes
+- Operador - so visualiza
+
+---
+
+## O que da pra fazer
+
+- Cadastrar aeronave (codigo gerado automatico)
+- Adicionar pecas, etapas e testes em cada aeronave
+- Gerenciar status das pecas e etapas
+- Vincular funcionarios nas etapas
+- Gerar relatorio de entrega (so admin)
+- Cadastrar novos funcionarios (so admin)
+
+### Regras das etapas
+
+- Nao pode iniciar uma etapa se a anterior nao foi concluida
+- Nao pode finalizar etapa sem funcionario vinculado
+
+---
+
+## Seguranca
+
+- Senhas salvas com hash (SHA-256)
+- IDs gerados automaticamente (UUID)
+- Nao tem senha no codigo
+- Rotas protegidas por permissao
+
+---
+
+## Estrutura
+
 ```
+src/
+  context/   -> AuthContext e AppContext (logica do sistema)
+  pages/     -> todas as telas (13 paginas)
+  types/     -> enums e interfaces
+  utils/     -> hash de senha
+  App.tsx    -> rotas
+  App.css    -> estilos
+```
+
+---
+
+## Melhorias em relacao a AV1
+
+- IDs sao gerados automaticos, nao digitados
+- Etapa nao finaliza sem funcionario
+- CRUD completo (da pra editar e excluir tudo)
