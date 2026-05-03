@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 export default function Login() {
-  const { login, precisaConfiguracaoInicial } = useAuth()
+  const { login, precisaConfiguracaoInicial, estaLogado } = useAuth()
   const navigate = useNavigate()
   const [usuario, setUsuario] = useState('')
   const [senha, setSenha] = useState('')
@@ -14,10 +14,14 @@ export default function Login() {
   useEffect(() => {
     if (precisaConfiguracaoInicial()) {
       navigate('/configuracao-inicial', { replace: true })
-    } else {
-      setVerificando(false)
+      return
     }
-  }, [precisaConfiguracaoInicial, navigate])
+    if (estaLogado()) {
+      navigate('/dashboard', { replace: true })
+      return
+    }
+    setVerificando(false)
+  }, [precisaConfiguracaoInicial, estaLogado, navigate])
 
   if (verificando) {
     return null
@@ -56,6 +60,7 @@ export default function Login() {
             type="text"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
+            placeholder="Seu nome de usuario"
             autoComplete="username"
             autoFocus
           />
@@ -66,6 +71,7 @@ export default function Login() {
             type="password"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
+            placeholder="Sua senha"
             autoComplete="current-password"
           />
 

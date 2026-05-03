@@ -55,7 +55,7 @@ export default function FormPeca() {
         <form onSubmit={handleSubmit} className="form-cadastro">
           <div className="campo">
             <label htmlFor="nome">Nome da peça</label>
-            <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
+            <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex: Turbina Rolls-Royce" autoFocus />
           </div>
 
           <div className="campo">
@@ -68,7 +68,7 @@ export default function FormPeca() {
 
           <div className="campo">
             <label htmlFor="fornecedor">Fornecedor</label>
-            <input id="fornecedor" type="text" value={fornecedor} onChange={(e) => setFornecedor(e.target.value)} />
+            <input id="fornecedor" type="text" value={fornecedor} onChange={(e) => setFornecedor(e.target.value)} placeholder="Ex: GE Aviation" />
           </div>
 
           <div className="campo">

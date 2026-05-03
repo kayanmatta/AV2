@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { NivelPermissao } from '../types'
 
 export default function ConfiguracaoInicial() {
-  const { cadastrarFuncionario, precisaConfiguracaoInicial } = useAuth()
+  const { cadastrarFuncionario, precisaConfiguracaoInicial, estaLogado } = useAuth()
   const navigate = useNavigate()
   const [nome, setNome] = useState('')
   const [usuario, setUsuario] = useState('')
@@ -16,11 +16,15 @@ export default function ConfiguracaoInicial() {
 
   useEffect(() => {
     if (!precisaConfiguracaoInicial()) {
-      navigate('/login', { replace: true })
+      if (estaLogado()) {
+        navigate('/dashboard', { replace: true })
+      } else {
+        navigate('/login', { replace: true })
+      }
     } else {
       setVerificando(false)
     }
-  }, [precisaConfiguracaoInicial, navigate])
+  }, [precisaConfiguracaoInicial, estaLogado, navigate])
 
   if (verificando) {
     return null
@@ -72,16 +76,16 @@ export default function ConfiguracaoInicial() {
 
         <form onSubmit={handleSubmit}>
           <label htmlFor="nome">Nome completo</label>
-          <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
+          <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome completo" autoFocus />
 
           <label htmlFor="usuario">Nome de usuário</label>
-          <input id="usuario" type="text" value={usuario} onChange={(e) => setUsuario(e.target.value)} autoComplete="off" />
+          <input id="usuario" type="text" value={usuario} onChange={(e) => setUsuario(e.target.value)} placeholder="Nome de usuario" autoComplete="off" />
 
           <label htmlFor="senha">Senha</label>
-          <input id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} autoComplete="new-password" />
+          <input id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="Minimo 6 caracteres" autoComplete="new-password" />
 
           <label htmlFor="confirmar">Confirmar senha</label>
-          <input id="confirmar" type="password" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} autoComplete="new-password" />
+          <input id="confirmar" type="password" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} placeholder="Repita a senha" autoComplete="new-password" />
 
           {erro && <p className="msg-erro">{erro}</p>}
 

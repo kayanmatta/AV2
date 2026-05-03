@@ -1,9 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
+import { NivelPermissao } from '../types'
 
 export default function DetalhesAeronave() {
-  const { usuarioLogado, logout } = useAuth()
+  const { usuarioLogado, logout, temPermissao } = useAuth()
   const { buscarAeronave } = useApp()
   const { codigo } = useParams<{ codigo: string }>()
 
@@ -52,9 +53,13 @@ export default function DetalhesAeronave() {
           <h2>{aeronave.codigo} - {aeronave.modelo}</h2>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <Link to={`/aeronaves/${codigo}/gerenciar`} className="btn-acao">Gerenciar</Link>
-            <Link to={`/aeronaves/${codigo}/editar`} className="btn-acao">Editar</Link>
+            {temPermissao(NivelPermissao.ADMINISTRADOR) && (
+              <Link to={`/aeronaves/${codigo}/editar`} className="btn-acao">Editar</Link>
+            )}
             <Link to="/aeronaves" className="btn-acao btn-secundario">Voltar</Link>
-            <Link to={`/aeronaves/${codigo}/relatorio`} className="btn-acao">Relatório</Link>
+            {temPermissao(NivelPermissao.ADMINISTRADOR) && (
+              <Link to={`/aeronaves/${codigo}/relatorio`} className="btn-acao">Relatório</Link>
+            )}
           </div>
         </div>
 
@@ -90,9 +95,11 @@ export default function DetalhesAeronave() {
               ))}
             </ul>
           )}
-          <Link to={`/aeronaves/${codigo}/pecas/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
-            + Adicionar Peça
-          </Link>
+          {temPermissao(NivelPermissao.ENGENHEIRO) && (
+            <Link to={`/aeronaves/${codigo}/pecas/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
+              + Adicionar Peça
+            </Link>
+          )}
         </section>
 
         {/* ETAPAS */}
@@ -113,9 +120,11 @@ export default function DetalhesAeronave() {
               ))}
             </ul>
           )}
-          <Link to={`/aeronaves/${codigo}/etapas/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
-            + Adicionar Etapa
-          </Link>
+          {temPermissao(NivelPermissao.ENGENHEIRO) && (
+            <Link to={`/aeronaves/${codigo}/etapas/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
+              + Adicionar Etapa
+            </Link>
+          )}
         </section>
 
         {/* TESTES */}
@@ -136,9 +145,11 @@ export default function DetalhesAeronave() {
               ))}
             </ul>
           )}
-          <Link to={`/aeronaves/${codigo}/testes/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
-            + Executar Teste
-          </Link>
+          {temPermissao(NivelPermissao.ENGENHEIRO) && (
+            <Link to={`/aeronaves/${codigo}/testes/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
+              + Executar Teste
+            </Link>
+          )}
         </section>
       </main>
     </div>

@@ -79,23 +79,23 @@ export default function ListaFuncionarios() {
           <form onSubmit={handleSubmit} className="form-cadastro" style={{ marginBottom: '2rem' }}>
             <div className="campo">
               <label htmlFor="nome">Nome completo *</label>
-              <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
+              <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome completo" autoFocus />
             </div>
             <div className="campo">
               <label htmlFor="telefone">Telefone</label>
-              <input id="telefone" type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
+              <input id="telefone" type="text" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="(11) 99999-9999" />
             </div>
             <div className="campo">
               <label htmlFor="endereco">Endereço</label>
-              <input id="endereco" type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
+              <input id="endereco" type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)} placeholder="Rua, Nº - Bairro" />
             </div>
             <div className="campo">
               <label htmlFor="usuario">Nome de usuário *</label>
-              <input id="usuario" type="text" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+              <input id="usuario" type="text" value={usuario} onChange={(e) => setUsuario(e.target.value)} placeholder="Nome de usuario" />
             </div>
             <div className="campo">
               <label htmlFor="senha">Senha *</label>
-              <input id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+              <input id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="Minimo 4 caracteres" />
             </div>
             <div className="campo">
               <label htmlFor="nivel">Nível de permissão</label>

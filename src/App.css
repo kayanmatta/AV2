@@ -691,3 +691,172 @@ body {
   color: #1e293b;
   border: 1px solid #e2e8f0;
 }
+
+/* ======== RESPONSIVO ======== */
+
+@media (max-width: 768px) {
+  .topo {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    height: auto;
+  }
+
+  .topo > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .conteudo {
+    padding: 1rem;
+  }
+
+  .cards-resumo {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .card-resumo {
+    padding: 1.25rem 1rem;
+  }
+
+  .card-numero {
+    font-size: 1.8rem;
+  }
+
+  .cabecalho-pagina {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cabecalho-pagina > div {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .detalhes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tabela {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabela th,
+  .tabela td {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  .form-cadastro {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .acoes-rapidas {
+    padding: 1.25rem;
+  }
+
+  .lista-simples li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .detalhe-extra {
+    margin-left: 0;
+  }
+
+  .secao h3 {
+    font-size: 0.95rem;
+  }
+
+  .acoes-inline {
+    margin-left: 0;
+    margin-top: 0.25rem;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-link {
+    font-size: 1rem;
+    margin-right: 0.5rem;
+  }
+
+  .nav-link {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .cards-resumo {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .card-resumo {
+    padding: 1rem 0.75rem;
+  }
+
+  .card-numero {
+    font-size: 1.5rem;
+  }
+
+  .card-label {
+    font-size: 0.75rem;
+  }
+
+  .detalhes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-acao {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+    justify-content: center;
+  }
+
+  .tabela {
+    font-size: 0.78rem;
+  }
+
+  .tabela th,
+  .tabela td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .user-info {
+    font-size: 0.75rem;
+  }
+
+  .conteudo h2 {
+    font-size: 1.2rem;
+  }
+
+  .cabecalho-pagina > div {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .lista-simples li {
+    padding: 0.7rem 0.9rem;
+  }
+
+  .detalhe-item {
+    padding: 1rem 1.2rem;
+  }
+
+  .detalhe-valor {
+    font-size: 1.1rem;
+  }
+
+  .secao {
+    margin-top: 1.2rem;
+  }
+}

@@ -52,7 +52,7 @@ export default function FormEtapa() {
         <form onSubmit={handleSubmit} className="form-cadastro">
           <div className="campo">
             <label htmlFor="nome">Nome da etapa</label>
-            <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
+            <input id="nome" type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex: Montagem das asas" autoFocus />
           </div>
 
           <div className="campo">

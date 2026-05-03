@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
+import { NivelPermissao } from '../types'
 
 export default function Dashboard() {
-  const { usuarioLogado, logout } = useAuth()
+  const { usuarioLogado, logout, temPermissao } = useAuth()
   const { aeronaves } = useApp()
 
   const etapasConcluidas = aeronaves.reduce(
@@ -22,7 +23,9 @@ export default function Dashboard() {
         <div>
           <Link to="/dashboard" className="logo-link">AEROCODE</Link>
           <Link to="/aeronaves" className="nav-link">Aeronaves</Link>
-          <Link to="/funcionarios" className="nav-link">Funcionários</Link>
+          {temPermissao(NivelPermissao.ADMINISTRADOR) && (
+            <Link to="/funcionarios" className="nav-link">Funcionários</Link>
+          )}
         </div>
         <div>
           <span className="user-info">
@@ -56,7 +59,9 @@ export default function Dashboard() {
 
         <div className="acoes-rapidas">
           <h3>Ações Rápidas</h3>
-          <Link to="/aeronaves/novo" className="btn-acao">+ Nova Aeronave</Link>
+          {temPermissao(NivelPermissao.ADMINISTRADOR) && (
+            <Link to="/aeronaves/novo" className="btn-acao">+ Nova Aeronave</Link>
+          )}
           <Link to="/aeronaves" className="btn-acao btn-secundario">Ver Todas Aeronaves</Link>
         </div>
       </main>

@@ -1,10 +1,10 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useApp } from '../context/AppContext'
-import { StatusPeca } from '../types'
+import { StatusPeca, NivelPermissao } from '../types'
 
 export default function GerenciarEtapas() {
-  const { usuarioLogado, logout } = useAuth()
+  const { usuarioLogado, logout, temPermissao } = useAuth()
   const { buscarAeronave, iniciarEtapa, finalizarEtapa, excluirEtapa, atualizarStatusPeca } = useApp()
   const { codigo } = useParams<{ codigo: string }>()
   const navigate = useNavigate()
@@ -35,7 +35,11 @@ export default function GerenciarEtapas() {
   }
 
   function handleIniciar(etapaId: string) {
-    iniciarEtapa(codigo!, etapaId)
+    const ok = iniciarEtapa(codigo!, etapaId)
+    if (!ok) {
+      alert('Não foi possível iniciar esta etapa. Verifique se a etapa anterior foi concluída.')
+      return
+    }
     navigate(`/aeronaves/${codigo}`)
   }
 
@@ -45,7 +49,11 @@ export default function GerenciarEtapas() {
       alert('Esta etapa não possui funcionários vinculados. Associe um funcionário antes de finalizar.')
       return
     }
-    finalizarEtapa(codigo!, etapaId)
+    const ok = finalizarEtapa(codigo!, etapaId)
+    if (!ok) {
+      alert('Não foi possível finalizar esta etapa.')
+      return
+    }
     navigate(`/aeronaves/${codigo}`)
   }
 
@@ -107,9 +115,11 @@ export default function GerenciarEtapas() {
               ))}
             </ul>
           )}
+          {temPermissao(NivelPermissao.ENGENHEIRO) && (
           <Link to={`/aeronaves/${codigo}/pecas/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
             + Adicionar Peça
           </Link>
+          )}
         </section>
 
         <section className="secao">
@@ -132,20 +142,26 @@ export default function GerenciarEtapas() {
                     {e.status === 'EM_ANDAMENTO' && (
                       <button className="link-acao" onClick={() => handleFinalizar(e.id)}>Finalizar</button>
                     )}
-                    <Link to={`/aeronaves/${codigo}/etapas/${e.id}/funcionarios`} className="link-acao">
-                      Funcionários
-                    </Link>
-                    <button className="link-acao link-perigo" onClick={() => handleExcluirEtapa(e.id)}>
-                      Excluir
-                    </button>
+                    {temPermissao(NivelPermissao.ENGENHEIRO) && (
+                      <>
+                        <Link to={`/aeronaves/${codigo}/etapas/${e.id}/funcionarios`} className="link-acao">
+                          Funcionários
+                        </Link>
+                        <button className="link-acao link-perigo" onClick={() => handleExcluirEtapa(e.id)}>
+                          Excluir
+                        </button>
+                      </>
+                    )}
                   </div>
                 </li>
               ))}
             </ul>
           )}
+          {temPermissao(NivelPermissao.ENGENHEIRO) && (
           <Link to={`/aeronaves/${codigo}/etapas/novo`} className="btn-acao" style={{ marginTop: '0.75rem' }}>
             + Adicionar Etapa
           </Link>
+          )}
         </section>
       </main>
     </div>

@@ -42,7 +42,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return []
   })
 
-  const [usuarioLogado, setUsuarioLogado] = useState<Funcionario | null>(null)
+  const [usuarioLogado, setUsuarioLogado] = useState<Funcionario | null>(() => {
+    const sessao = sessionStorage.getItem('aerocode_sessao')
+    if (sessao) {
+      try {
+        const parsed = JSON.parse(sessao)
+        // Verifica se o usuário ainda existe na lista de funcionários
+        const salvo = localStorage.getItem('aerocode_funcionarios')
+        if (salvo) {
+          const funcionariosSalvos: Funcionario[] = JSON.parse(salvo)
+          const encontrado = funcionariosSalvos.find((f: Funcionario) => f.id === parsed.id)
+          if (encontrado) {
+            // Retorna o funcionário completo (com senha) para o estado interno
+            return encontrado
+          }
+        }
+      } catch {
+        // Dados inválidos, ignora
+      }
+    }
+    return null
+  })
 
   const salvarFuncionarios = useCallback((lista: Funcionario[]) => {
     localStorage.setItem('aerocode_funcionarios', JSON.stringify(lista))
@@ -57,6 +77,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const ok = await verificarSenha(senha, f.senha)
           if (ok) {
             setUsuarioLogado(f)
+            // Salva sessão SEM o hash da senha
+            sessionStorage.setItem('aerocode_sessao', JSON.stringify(semSenha(f)))
             return true
           }
           return false
@@ -69,6 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     setUsuarioLogado(null)
+    sessionStorage.removeItem('aerocode_sessao')
   }, [])
 
   const cadastrarFuncionario = useCallback(

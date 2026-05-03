@@ -88,6 +88,7 @@ export default function FormAeronave() {
               type="text"
               value={modelo}
               onChange={(e) => setModelo(e.target.value)}
+              placeholder="Ex: E190-E2"
               autoFocus
             />
           </div>
@@ -112,6 +113,7 @@ export default function FormAeronave() {
               min="1"
               value={capacidade}
               onChange={(e) => setCapacidade(e.target.value)}
+              placeholder="Ex: 114"
             />
           </div>
 
@@ -123,6 +125,7 @@ export default function FormAeronave() {
               min="1"
               value={alcance}
               onChange={(e) => setAlcance(e.target.value)}
+              placeholder="Ex: 5200"
             />
           </div>
 
