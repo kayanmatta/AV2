@@ -16,6 +16,7 @@ interface AuthContextType {
     senha: string,
     nivelPermissao: NivelPermissao
   ) => Promise<string>
+  excluirFuncionario: (id: string) => boolean
   temPermissao: (nivelNecessario: NivelPermissao) => boolean
   estaLogado: () => boolean
   getUsuarioLogado: () => Omit<Funcionario, 'senha'> | null
@@ -104,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       nivelPermissao: NivelPermissao
     ): Promise<string> => {
       if (!nome.trim() || !usuario.trim() || !senha.trim()) return ''
-      if (senha.length < 4) return ''
+      if (senha.length < 6) return ''
       if (funcionarios.some((f) => f.usuario === usuario)) return ''
 
       const senhaHash = await hashSenha(senha)
@@ -125,6 +126,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return id
     },
     [funcionarios, salvarFuncionarios]
+  )
+
+  const excluirFuncionario = useCallback(
+    (id: string): boolean => {
+      if (!usuarioLogado) return false
+      const alvo = funcionarios.find((f) => f.id === id)
+      if (!alvo) return false
+      // Não pode excluir a si mesmo
+      if (alvo.id === usuarioLogado.id) return false
+      // Não pode excluir o último administrador
+      if (alvo.nivelPermissao === NivelPermissao.ADMINISTRADOR) {
+        const adminsRestantes = funcionarios.filter(
+          (f) => f.nivelPermissao === NivelPermissao.ADMINISTRADOR && f.id !== id
+        )
+        if (adminsRestantes.length === 0) return false
+      }
+      const novaLista = funcionarios.filter((f) => f.id !== id)
+      setFuncionarios(novaLista)
+      salvarFuncionarios(novaLista)
+      return true
+    },
+    [funcionarios, usuarioLogado, salvarFuncionarios]
   )
 
   const temPermissao = useCallback(
@@ -163,6 +186,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         logout,
         cadastrarFuncionario,
+        excluirFuncionario,
         temPermissao,
         estaLogado,
         getUsuarioLogado,

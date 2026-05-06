@@ -1,7 +1,8 @@
-import { type ReactNode } from 'react'
+import { type ReactNode, useCallback } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { NivelPermissao } from './types'
+import { useKonamiCode } from './hooks/useKonamiCode'
  
 import Login from './pages/Login'
 import ConfiguracaoInicial from './pages/ConfiguracaoInicial'
@@ -42,9 +43,25 @@ function RotaProtegida({
   return <>{children}</>
 }
 
+function EasterEgg() {
+  const ativar = useCallback(() => {
+    const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
+    if (link) {
+      link.href = '/pysandu.png'
+      link.type = 'image/png'
+    }
+    document.title = '🏴‍☠️ AEROCODE'
+  }, [])
+
+  useKonamiCode(ativar)
+  return null
+}
+
 function App() {
   return (
-    <Routes>
+    <>
+      <EasterEgg />
+      <Routes>
       <Route path="/configuracao-inicial" element={<ConfiguracaoInicial />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<RotaProtegida><Dashboard /></RotaProtegida>} />
@@ -52,7 +69,7 @@ function App() {
       <Route path="/aeronaves/novo" element={<RotaProtegida nivelNecessario={NivelPermissao.ADMINISTRADOR}><FormAeronave /></RotaProtegida>} />
       <Route path="/aeronaves/:codigo" element={<RotaProtegida><DetalhesAeronave /></RotaProtegida>} />
       <Route path="/aeronaves/:codigo/editar" element={<RotaProtegida nivelNecessario={NivelPermissao.ADMINISTRADOR}><FormAeronave /></RotaProtegida>} />
-      <Route path="/aeronaves/:codigo/gerenciar" element={<RotaProtegida><GerenciarEtapas /></RotaProtegida>} />
+      <Route path="/aeronaves/:codigo/gerenciar" element={<RotaProtegida nivelNecessario={NivelPermissao.ENGENHEIRO}><GerenciarEtapas /></RotaProtegida>} />
       <Route path="/aeronaves/:codigo/pecas/novo" element={<RotaProtegida nivelNecessario={NivelPermissao.ENGENHEIRO}><FormPeca /></RotaProtegida>} />
       <Route path="/aeronaves/:codigo/etapas/novo" element={<RotaProtegida nivelNecessario={NivelPermissao.ENGENHEIRO}><FormEtapa /></RotaProtegida>} />
       <Route path="/aeronaves/:codigo/testes/novo" element={<RotaProtegida nivelNecessario={NivelPermissao.ENGENHEIRO}><FormTeste /></RotaProtegida>} />
@@ -61,6 +78,7 @@ function App() {
       <Route path="/aeronaves/:codigo/relatorio" element={<RotaProtegida nivelNecessario={NivelPermissao.ADMINISTRADOR}><Relatorio /></RotaProtegida>} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
+    </>
   )
 }
 

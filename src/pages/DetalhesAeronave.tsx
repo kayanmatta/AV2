@@ -52,7 +52,9 @@ export default function DetalhesAeronave() {
         <div className="cabecalho-pagina">
           <h2>{aeronave.codigo} - {aeronave.modelo}</h2>
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-            <Link to={`/aeronaves/${codigo}/gerenciar`} className="btn-acao">Gerenciar</Link>
+            {temPermissao(NivelPermissao.ENGENHEIRO) && (
+              <Link to={`/aeronaves/${codigo}/gerenciar`} className="btn-acao">Gerenciar</Link>
+            )}
             {temPermissao(NivelPermissao.ADMINISTRADOR) && (
               <Link to={`/aeronaves/${codigo}/editar`} className="btn-acao">Editar</Link>
             )}

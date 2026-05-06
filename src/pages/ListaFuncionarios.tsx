@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { NivelPermissao } from '../types'
 
 export default function ListaFuncionarios() {
-  const { usuarioLogado, logout, funcionarios, cadastrarFuncionario } = useAuth()
+  const { usuarioLogado, logout, funcionarios, cadastrarFuncionario, excluirFuncionario } = useAuth()
   const [mostrarForm, setMostrarForm] = useState(false)
   const [nome, setNome] = useState('')
   const [telefone, setTelefone] = useState('')
@@ -26,8 +26,8 @@ export default function ListaFuncionarios() {
       return
     }
 
-    if (senha.length < 4) {
-      setErro('A senha deve ter pelo menos 4 caracteres.')
+    if (senha.length < 6) {
+      setErro('A senha deve ter pelo menos 6 caracteres.')
       return
     }
 
@@ -36,7 +36,7 @@ export default function ListaFuncionarios() {
     setCarregando(false)
 
     if (!id) {
-      setErro('Este nome de usuário já existe.')
+      setErro('Não foi possível cadastrar. Verifique os dados informados.')
       return
     }
 
@@ -95,7 +95,7 @@ export default function ListaFuncionarios() {
             </div>
             <div className="campo">
               <label htmlFor="senha">Senha *</label>
-              <input id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="Minimo 4 caracteres" />
+              <input id="senha" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="Mínimo 6 caracteres" />
             </div>
             <div className="campo">
               <label htmlFor="nivel">Nível de permissão</label>
@@ -124,6 +124,7 @@ export default function ListaFuncionarios() {
                 <th>Usuário</th>
                 <th>Telefone</th>
                 <th>Nível</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -136,6 +137,23 @@ export default function ListaFuncionarios() {
                     <span className={`badge badge-${f.nivelPermissao === 'ADMINISTRADOR' ? 'vermelho' : f.nivelPermissao === 'ENGENHEIRO' ? 'laranja' : 'azul'}`}>
                       {f.nivelPermissao === 'ADMINISTRADOR' ? 'Admin' : f.nivelPermissao === 'ENGENHEIRO' ? 'Engenheiro' : 'Operador'}
                     </span>
+                  </td>
+                  <td>
+                    {f.id !== usuarioLogado?.id && (
+                      <button
+                        className="link-acao link-perigo"
+                        onClick={() => {
+                          if (window.confirm(`Excluir funcionário ${f.nome}?`)) {
+                            const ok = excluirFuncionario(f.id)
+                            if (!ok) {
+                              alert('Não é possível excluir este funcionário. Verifique se ele não é o último administrador do sistema.')
+                            }
+                          }
+                        }}
+                      >
+                        Excluir
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

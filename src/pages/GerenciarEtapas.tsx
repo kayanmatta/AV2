@@ -102,15 +102,17 @@ export default function GerenciarEtapas() {
                   <span className={`badge badge-${p.status === 'PRONTA' ? 'verde' : p.status === 'EM_TRANSPORTE' ? 'laranja' : 'azul'}`}>
                     {p.status === 'EM_PRODUCAO' ? 'Em Produção' : p.status === 'EM_TRANSPORTE' ? 'Em Transporte' : 'Pronta'}
                   </span>
-                  <select
-                    value={p.status}
-                    onChange={(e) => handleAtualizarPeca(p.id, e.target.value as StatusPeca)}
-                    className="select-inline"
-                  >
-                    <option value={StatusPeca.EM_PRODUCAO}>Em Produção</option>
-                    <option value={StatusPeca.EM_TRANSPORTE}>Em Transporte</option>
-                    <option value={StatusPeca.PRONTA}>Pronta</option>
-                  </select>
+                  {temPermissao(NivelPermissao.ENGENHEIRO) && (
+                    <select
+                      value={p.status}
+                      onChange={(e) => handleAtualizarPeca(p.id, e.target.value as StatusPeca)}
+                      className="select-inline"
+                    >
+                      <option value={StatusPeca.EM_PRODUCAO}>Em Produção</option>
+                      <option value={StatusPeca.EM_TRANSPORTE}>Em Transporte</option>
+                      <option value={StatusPeca.PRONTA}>Pronta</option>
+                    </select>
+                  )}
                 </li>
               ))}
             </ul>
@@ -136,10 +138,10 @@ export default function GerenciarEtapas() {
                   </span>
                   <span className="detalhe-extra">{e.funcionarios.length} func.</span>
                   <div className="acoes-inline">
-                    {e.status === 'PENDENTE' && (
+                    {temPermissao(NivelPermissao.ENGENHEIRO) && e.status === 'PENDENTE' && (
                       <button className="link-acao" onClick={() => handleIniciar(e.id)}>Iniciar</button>
                     )}
-                    {e.status === 'EM_ANDAMENTO' && (
+                    {temPermissao(NivelPermissao.ENGENHEIRO) && e.status === 'EM_ANDAMENTO' && (
                       <button className="link-acao" onClick={() => handleFinalizar(e.id)}>Finalizar</button>
                     )}
                     {temPermissao(NivelPermissao.ENGENHEIRO) && (

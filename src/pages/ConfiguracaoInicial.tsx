@@ -61,7 +61,7 @@ export default function ConfiguracaoInicial() {
     setCarregando(false)
 
     if (!id) {
-      setErro('Este nome de usuário já existe.')
+      setErro('Não foi possível cadastrar. Verifique os dados informados.')
       return
     }
 
