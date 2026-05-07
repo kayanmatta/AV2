@@ -860,3 +860,101 @@ body {
     margin-top: 1.2rem;
   }
 }
+
+/* ======== EASTER EGG: PAYSANDU ======== */
+
+.overlay-paysandu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.card-paysandu {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  cursor: default;
+  animation: bounceIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  max-width: 90vw;
+}
+
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: translateY(-300px) scale(0.6) rotate(-5deg); }
+  50%  { opacity: 1; transform: translateY(20px) scale(1.03) rotate(2deg); }
+  70%  { transform: translateY(-10px) scale(0.98) rotate(-1deg); }
+  85%  { transform: translateY(4px) scale(1.01) rotate(0.5deg); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+.img-paysandu {
+  max-width: 420px;
+  max-height: 55vh;
+  border-radius: 10px;
+  border: 3px solid #0c4a6e;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.texto-paysandu {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0c4a6e;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+  animation: glitch 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes glitch {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-2px, 1px); }
+  40%  { transform: translate(2px, -1px); }
+  60%  { transform: translate(-1px, -1px); }
+  80%  { transform: translate(1px, 2px); }
+  100% { transform: translate(0, 0); }
+}
+
+.sub-paysandu {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+.btn-fechar-paysandu {
+  padding: 0.6rem 2.5rem;
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 1px;
+}
+
+.btn-fechar-paysandu:hover {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+}
+
+@media (max-width: 520px) {
+  .texto-paysandu { font-size: 1.1rem; }
+  .img-paysandu { max-width: 85vw; max-height: 40vh; }
+  .card-paysandu { padding: 1.2rem; }
+}

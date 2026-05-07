@@ -1,8 +1,10 @@
-import { type ReactNode, useCallback } from 'react'
+import { type ReactNode, useCallback, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { NivelPermissao } from './types'
 import { useKonamiCode } from './hooks/useKonamiCode'
+import pysanduPng from './assets/easter/pysandu.png'
+import paysanduJpg from './assets/easter/paysandu.jpg'
  
 import Login from './pages/Login'
 import ConfiguracaoInicial from './pages/ConfiguracaoInicial'
@@ -44,17 +46,35 @@ function RotaProtegida({
 }
 
 function EasterEgg() {
+  const [visivel, setVisivel] = useState(false)
+
   const ativar = useCallback(() => {
+    // Troca o favicon pro pirata
     const link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
     if (link) {
-      link.href = '/pysandu.png'
+      link.href = pysanduPng
       link.type = 'image/png'
     }
     document.title = '🏴‍☠️ AEROCODE'
+    setVisivel(true)
   }, [])
 
+  const fechar = useCallback(() => setVisivel(false), [])
+
   useKonamiCode(ativar)
-  return null
+
+  if (!visivel) return null
+
+  return (
+    <div className="overlay-paysandu" onClick={fechar}>
+      <div className="card-paysandu" onClick={(e) => e.stopPropagation()}>
+        <img src={paysanduJpg} alt="🏴‍☠️" className="img-paysandu" />
+        <p className="texto-paysandu">🏴‍☠️ PAYSANDU ENCONTRADO! 🏴‍☠️</p>
+        <p className="sub-paysandu">ações terão consequências...</p>
+        <button className="btn-fechar-paysandu" onClick={fechar}>Fugir</button>
+      </div>
+    </div>
+  )
 }
 
 function App() {
