@@ -2,11 +2,11 @@
 
 AV2 — Professor Gerson Penha
 
-Sistema SPA (Single Page Application) desenvolvido em React + TypeScript + Vite para gestão visual da produção de aeronaves, migrando da interface CLI legada para uma GUI web moderna.
+Sistema desenvolvido em React + TypeScript + Vite para gestão visual da produção de aeronaves, migrando da interface CLI legada para uma GUI web moderna.
 
 ---
 
-## 🚀 Como rodar
+## Como rodar
 
 Precisa do Node.js 18+ instalado.
 
@@ -15,13 +15,9 @@ npm install
 npm run dev
 ```
 
-Abre em http://localhost:5173
-
-Compatível com **Windows 10+** e **Linux Ubuntu 24.04.03+**.
-
 ---
 
-## 🔐 Primeiro acesso
+## Primeiro acesso
 
 1. Na primeira execução, a tela de **Configuração Inicial** aparece automaticamente
 2. Cadastre o administrador (nome, usuário, senha)
@@ -32,7 +28,7 @@ Compatível com **Windows 10+** e **Linux Ubuntu 24.04.03+**.
 
 ---
 
-## 👥 Níveis de Permissão
+## Níveis de Permissão
 
 | Nível | Acesso |
 |---|---|
@@ -42,7 +38,7 @@ Compatível com **Windows 10+** e **Linux Ubuntu 24.04.03+**.
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 - ✅ Configuração inicial do primeiro administrador
 - ✅ Login com senha hash SHA-256
@@ -62,13 +58,13 @@ Compatível com **Windows 10+** e **Linux Ubuntu 24.04.03+**.
 
 ### Regras de negócio
 
-- 🔒 Não pode iniciar uma etapa se a anterior não foi concluída
-- 🔒 Não pode finalizar etapa sem pelo menos um funcionário vinculado
-- 🔒 Botões de ação só aparecem para usuários com permissão adequada
+- Não pode iniciar uma etapa se a anterior não foi concluída
+- Não pode finalizar etapa sem pelo menos um funcionário vinculado
+- Botões de ação só aparecem para usuários com permissão adequada
 
 ---
 
-## 🔒 Segurança
+## Segurança
 
 - Senhas com hash **SHA-256** (Web Crypto API) — nunca em texto plano
 - Sessão em `sessionStorage` **sem o hash da senha**
@@ -78,7 +74,7 @@ Compatível com **Windows 10+** e **Linux Ubuntu 24.04.03+**.
 
 ---
 
-## 📁 Estrutura
+## Estrutura
 
 ```
 src/
@@ -107,7 +103,7 @@ src/
 
 ---
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 | Tecnologia | Finalidade |
 |---|---|
@@ -122,7 +118,7 @@ src/
 
 ---
 
-## 📝 Melhorias em relação à AV1
+## Melhorias em relação à AV1
 
 - IDs gerados automaticamente (UUID), não digitados pelo usuário
 - Etapa não finaliza sem funcionário vinculado
